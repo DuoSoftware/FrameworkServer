@@ -1,9 +1,9 @@
 var onRecieve = function(){};
 var onError = function(){};
 var onDisconnected = function(){};
-var onConnecting = function(){};
 var onConnected = function(){};
-
+var onInitializing = function(){};
+var onInitialized = function(){};
 
 function start(){
 	

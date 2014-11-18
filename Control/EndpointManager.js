@@ -10,17 +10,20 @@ function start(){
 		var setting = settings[index];
 		var protocol = require("../Extensions/Endpoint/" + setting.protocol + ".js");
 		
-		protocol.endpoint.onConnected(function(parameters){
-			if (protocol.isStateful)
-				clientRegistry.addClient(parameters) ;
+		protocol.endpoint.onConnected(function(socket,parameters){
+			
+			//if (protocol.isStateful == true){
+				clientRegistry.addClient(socket,parameters) ;
+			//}
 		});
 
-		protocol.endpoint.onDisconnected(function(parameters){
-			if (protocol.isStateful)
-				clientRegistry.removeClient(parameters) ;
+		protocol.endpoint.onDisconnected(function(socket, parameters){
+			//if (protocol.isStateful)
+				clientRegistry.removeClient(socket, parameters) ;
 		});
 
 		protocol.endpoint.onRecieve(function(parameters){
+			console.log (parameters)
 			commandDispatcher.dispatch(parameters);
 		});
 		

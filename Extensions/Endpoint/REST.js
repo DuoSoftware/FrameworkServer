@@ -1,12 +1,15 @@
 var onRecieve = function(){};
 var onError = function(){};
 var onDisconnected = function(){};
-var onConnecting = function(){};
 var onConnected = function(){};
+var onInitializing = function(){};
+var onInitialized = function(){};
 
+var express = require('express');
+var app = express();
 
 function start(){
-	
+	app.listen(3500);
 }
 
 function stop(){
@@ -14,8 +17,6 @@ function stop(){
 }
 
 function initialize(parameters){
-	var express = require('express')
-	var app = express()
 
 	var bodyParser = require('body-parser');
 	app.use(bodyParser.json());
@@ -26,12 +27,12 @@ function initialize(parameters){
 		commandObject.name = req.params.name;
 		commandObject.token = "";
 		commandObject.data = req.body;
-		onRecieve(commandObject)
+		onRecieve(commandObject);
 		
-		res.send("{\"result\" : \"ok\"}")
+		res.send("{\"result\" : \"ok\"}");
 	})
 
-	app.listen(3500)
+	
 }
 
 function send(parameters){
