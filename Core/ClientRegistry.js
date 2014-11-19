@@ -1,19 +1,19 @@
+var logger = require("./Logger.js");
+
 var onlineClients = []
 
 // socket, data
 
-function addClient(socket, clientData){
-	console.log ("adding client : " + clientData.userName);
+function addClient(socket, clientData, authData){
+	logger.log("New client registered : " + clientData.userName)
 	onlineClients.push({socket: socket, data: clientData});
 
 	users = [];
 	for (index in onlineClients)
 		users.push(onlineClients[index].data.userName)
 
-	console.log ("emitting message : " + users)
 	for (index in onlineClients)
 		onlineClients[index].socket.emit('usernames', users);
-	console.log ("message emited");
 }
 
 function removeClient (socket, clientData){
@@ -43,7 +43,6 @@ function getClient(username){
 				
 				var sendClient;
 				for (sIndex in onlineClients){
-					console.log ("iterating : " + onlineClients[sIndex].data.userName);
 
 					if (onlineClients[sIndex].data.userName === to){
 						sendClient = onlineClients[sIndex];
@@ -52,9 +51,7 @@ function getClient(username){
 					}
 				}
 
-				//sendClient.socket.emit('send message', msg);
 				sendClient.socket.send(msg)
-				console.log ("MESSAGE SENT (" + to +", " + from + "): "  + msg);
 			}
 		}	
 	}

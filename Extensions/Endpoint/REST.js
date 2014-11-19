@@ -26,6 +26,7 @@ function initialize(parameters){
 		commandObject.type = req.params.type;
 		commandObject.name = req.params.name;
 		commandObject.token = "";
+
 		commandObject.data = req.body;
 		onRecieve(commandObject);
 		

@@ -1,6 +1,9 @@
 var configurationManager = require("../Core/ConfigurationManager.js")
 var clientRegistry  = require("../Core/ClientRegistry.js")
+var authManager  = require("../Core/AuthenticationManager.js")
 var commandDispatcher  = require("./CommandManager.js")
+var logger = require("../Core/Logger.js");
+var integrationManager  = require("./integrationManager.js")
 
 var loadedProtocols = []
 
@@ -12,9 +15,15 @@ function start(){
 		
 		protocol.endpoint.onConnected(function(socket,parameters){
 			
-			//if (protocol.isStateful == true){
-				clientRegistry.addClient(socket,parameters) ;
-			//}
+			var authData = authManager.authenticate(parameters);
+
+			if (authData){
+				clientRegistry.addClient(socket, parameters, authData);
+				integrationManager.integrate(authData);
+			}
+			else{
+				logger.log("Client Registration Failed : " + parameters.userName);
+			}
 		});
 
 		protocol.endpoint.onDisconnected(function(socket, parameters){
