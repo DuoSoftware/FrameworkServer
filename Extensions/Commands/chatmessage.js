@@ -9,7 +9,7 @@ function execute(commandData){
 	var toClient = clientRegistry.getClient(commandData.data.to);
 
 	if (toClient){ //client is online
-		toClient.sendMessage(commandData.data.to, commandData.data.from, commandData.data.message);
+		toClient.invokeCommand(commandData.name, commandData.data);
 	}
 	else { //client is offline
 	}

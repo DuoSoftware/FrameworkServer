@@ -31,11 +31,11 @@ function initialize(parameters){
 	
 		socket.on('register', function(data, callback){
 			logger.log("New user added to WebSockets : " + data);
-			callback(true);
 			onConnected(socket, data);
+			callback({isSuccess:true, message:"Successfully Registered!!!"});
 		});
 	
-		socket.on('send message', function(data, callback){
+		socket.on('command', function(data, callback){
 			onRecieve(data);
 		});
 
@@ -44,6 +44,7 @@ function initialize(parameters){
 			onDisconnected(socket, data);
 		});
 	
+		socket.emit('connected',{isSuccess:true});
 	});
 
 }

@@ -38,20 +38,21 @@ function getClient(username){
 	for (index in onlineClients)
 	if (onlineClients[index].data.userName === username){
 		return {
-			sendMessage : function(to, from, message){
-				var msg = {to: to, from: from, message: message};
+			//name, type, data, token
+			invokeCommand : function(name,data){
 				
 				var sendClient;
 				for (sIndex in onlineClients){
 
-					if (onlineClients[sIndex].data.userName === to){
+					if (onlineClients[sIndex].data.userName === username){
 						sendClient = onlineClients[sIndex];
 						break;
 
 					}
 				}
 
-				sendClient.socket.send(msg)
+				sendClient.socket.send({name:name, type:"command", data:data});
+
 			}
 		}	
 	}

@@ -1,3 +1,5 @@
+var logger = require ('../../Core/Logger.js');
+
 var onRecieve = function(){};
 var onError = function(){};
 var onDisconnected = function(){};
@@ -22,6 +24,7 @@ function initialize(parameters){
 	app.use(bodyParser.json());
 
 	app.post('/:type/:name', function (req, res) {
+		logger.log ("REST request recieved");
 		var commandObject = {};
 		commandObject.type = req.params.type;
 		commandObject.name = req.params.name;

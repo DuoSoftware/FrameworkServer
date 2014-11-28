@@ -3,8 +3,7 @@ var clientRegistry  = require("../Core/ClientRegistry.js")
 var authManager  = require("../Core/AuthenticationManager.js")
 var commandDispatcher  = require("./CommandManager.js")
 var logger = require("../Core/Logger.js");
-var integrationManager  = require("./integrationManager.js")
-
+var integrationManager  = require("./IntegrationManager.js")
 var loadedProtocols = []
 
 function start(){
