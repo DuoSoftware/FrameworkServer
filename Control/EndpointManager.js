@@ -4,6 +4,7 @@ var authManager  = require("../Core/AuthenticationManager.js")
 var commandDispatcher  = require("./CommandManager.js")
 var logger = require("../Core/Logger.js");
 var integrationManager  = require("./IntegrationManager.js")
+var eventManager = require("./EventManager.js")
 var loadedProtocols = []
 
 function start(){
@@ -19,6 +20,7 @@ function start(){
 			if (authData){
 				clientRegistry.addClient(socket, parameters, authData);
 				integrationManager.integrate(authData);
+				eventManager.tasks.trigger("userstatechanged",{userName:parameters.userName, state:"online"},clientRegistry);
 			}
 			else{
 				logger.log("Client Registration Failed : " + parameters.userName);
@@ -27,7 +29,14 @@ function start(){
 
 		protocol.endpoint.onDisconnected(function(socket, parameters){
 			//if (protocol.isStateful)
-				clientRegistry.removeClient(socket, parameters) ;
+				var removeClient = clientRegistry.removeClient(socket, parameters) ;
+
+				if (removeClient)
+				{
+					eventManager.tasks.unsubscribeAll(removeClient.data);
+				}
+
+				eventManager.tasks.trigger("userstatechanged",{userName:removeClient.data.userName, state:"offline"},clientRegistry);
 		});
 
 		protocol.endpoint.onRecieve(function(parameters){

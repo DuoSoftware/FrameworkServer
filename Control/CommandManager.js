@@ -21,8 +21,14 @@ function dispatchCommand (commandJson){
 				}
 				break;
 			case "event-subscribe":
+				if (commandJson.data){
+					eventManager.tasks.subscribe(commandJson.name, commandJson.data);
+				}
 				break;
 			case "event-unsubscribe":
+				if (commandJson.data){
+					eventManager.tasks.unsubscribe(commandJson.name, commandJson.data);
+				}
 				break;
 
 		}

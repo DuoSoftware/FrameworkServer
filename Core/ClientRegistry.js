@@ -1,12 +1,13 @@
 var logger = require("./Logger.js");
 
-var onlineClients = []
+var onlineClients = [];
 
 // socket, data
 
 function addClient(socket, clientData, authData){
 	logger.log("New client registered : " + clientData.userName)
 	onlineClients.push({socket: socket, data: clientData});
+
 
 	users = [];
 	for (index in onlineClients)
@@ -24,8 +25,16 @@ function removeClient (socket, clientData){
 		break;
 	}
 
-	if (removeIndex !=-1)
+	var removeClient;
+
+	if (removeIndex !=-1){
+
+		removeClient = onlineClients[removeIndex];
+
 		onlineClients.splice(removeIndex,1);
+	}
+
+	return removeClient;
 }
 
 function getAllClients(authenticationData){
@@ -53,7 +62,23 @@ function getClient(username){
 
 				sendClient.socket.send({name:name, type:"command", data:data});
 
-			}
+			},
+			triggerEvent : function(name,data){
+				
+				var sendClient;
+				for (sIndex in onlineClients){
+
+					if (onlineClients[sIndex].data.userName === username){
+						sendClient = onlineClients[sIndex];
+						break;
+
+					}
+				}
+
+				logger.log("Eventing...")
+				sendClient.socket.send({name:name, type:"event", data:data});
+
+			},
 		}	
 	}
 
