@@ -85,7 +85,30 @@ function getClient(username){
 	return null;
 }
 
+function getResource(routingInfo){
+	var currentIndex = random(0, onlineClients.length-1);
+	logger.log("CurrentIndex : " + currentIndex);
+	var currentClient = onlineClients[currentIndex];
+
+
+	if (currentClient.data.userName === routingInfo.requestor){
+		currentIndex = random(0, onlineClients.length-1);
+		currentClient = onlineClients[currentIndex];
+	}
+
+	logger.log("Resource Acquired : " + currentClient.data.userName);
+	return currentClient; //getClient(currentClient.data.userName)	
+	
+}
+
+
+function random (low, high) {
+    return Math.floor(Math.random() * (high - low) + low);
+}
+
+
 exports.addClient = addClient
 exports.removeClient = removeClient
 exports.getAllClients = getAllClients
 exports.getClient = getClient
+exports.getResource = getResource

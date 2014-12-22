@@ -17,6 +17,8 @@ function start(){
 			
 			var authData = authManager.authenticate(parameters);
 
+			console.log(authData);
+
 			if (authData){
 				clientRegistry.addClient(socket, parameters, authData);
 				integrationManager.integrate(authData);
