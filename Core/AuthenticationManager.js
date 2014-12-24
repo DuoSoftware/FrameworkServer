@@ -72,7 +72,7 @@ function authenticate(data){
 			};
 			break;
 		default:
-			authData = {accounts:[], username:"test"};
+			authData = {accounts:[], username:data.userName};
 			break;
 	}
 	

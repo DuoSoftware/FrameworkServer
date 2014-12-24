@@ -9,12 +9,14 @@ function addClient(socket, clientData, authData){
 	onlineClients.push({socket: socket, data: clientData});
 
 
+/*
 	users = [];
 	for (index in onlineClients)
 		users.push(onlineClients[index].data.userName)
 
 	for (index in onlineClients)
 		onlineClients[index].socket.emit('usernames', users);
+*/
 }
 
 function removeClient (socket, clientData){

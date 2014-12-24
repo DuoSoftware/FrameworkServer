@@ -3,8 +3,6 @@ var eventManager = require ("./EventManager.js")
 function dispatchCommand (commandJson){
 	if (commandJson)
 	if (commandJson.type){
-		
-
 		//name, type, data, token
 
 		switch(commandJson.type){
