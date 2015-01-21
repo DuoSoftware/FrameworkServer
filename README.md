@@ -1,2 +1,3 @@
-FrameworkServer V6
-===============
+This Project is Deprecated
+Please refer to Cloud-Event-Bus
+================================
